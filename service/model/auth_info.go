@@ -8,7 +8,7 @@ type IAuthInfo interface {
 	Insert(info *AuthInfo) (*AuthInfo, error)
 	UpdatePassword(id int64, password string) (*AuthInfo, error)
 	UpdateEmail(id int64, email string) (*AuthInfo, error)
-	Delete(info *AuthInfo) error
+	Delete(id int64) error
 }
 
 type AuthInfo struct {
