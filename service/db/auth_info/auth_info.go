@@ -9,17 +9,17 @@ import (
 )
 
 type authInfo struct {
-	conn *sql.DB
+	conn      *sql.DB
+	tableName string
 }
-
-var tableName string = "auth"
 
 func New(database model.Database) (model.IAuthInfo, error) {
 	conn, err := db.NewConnection(database)
+	tableName := "auth"
 	if err != nil {
 		return nil, err
 	}
-	return &authInfo{conn: conn}, nil
+	return &authInfo{conn: conn, tableName: tableName}, nil
 }
 
 func (a *authInfo) CreateTableIfNotExists() error {
@@ -29,7 +29,7 @@ func (a *authInfo) CreateTableIfNotExists() error {
     email      text unique not null,
     password   text        not null,
     role       int         not null,
-    status     int		   not null)`, tableName)
+    status     int		   not null)`, a.tableName)
 	if err != nil {
 		return err
 	}
@@ -37,7 +37,8 @@ func (a *authInfo) CreateTableIfNotExists() error {
 }
 
 func (a *authInfo) SelectById(id int64) (*model.AuthInfo, error) {
-	row, err := a.conn.Query(`select id, created_at, email, password, role, status from $1 where id=$2`, tableName, id)
+	row, err := a.conn.Query(`select id, created_at, email, password, role, status from $1 where id=$2`,
+		a.tableName, id)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +56,7 @@ func (a *authInfo) Insert(info *model.AuthInfo) (*model.AuthInfo, error) {
 	info.CreatedAt = time.Now()
 	err := a.conn.QueryRow(`insert into $1 (created_at, email, password, role, status) 
 		values ($2, $3, $4, $5, $6) returning id`,
-		tableName, info.CreatedAt, info.Email, info.Password, info.Role, info.Status).Scan(&authInformation.Id)
+		a.tableName, info.CreatedAt, info.Email, info.Password, info.Role, info.Status).Scan(&authInformation.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +67,7 @@ func (a *authInfo) UpdatePassword(id int64, password string) (*model.AuthInfo, e
 	authInformation := model.AuthInfo{}
 	err := a.conn.QueryRow(`update $1 set password = $2 where id = $3 returning id, created_at, email, 
 		password, role, status`,
-		tableName, password, id).Scan(&authInformation.Id, &authInformation.CreatedAt, &authInformation.Email,
+		a.tableName, password, id).Scan(&authInformation.Id, &authInformation.CreatedAt, &authInformation.Email,
 		&authInformation.Password, &authInformation.Role, &authInformation.Status)
 	if err != nil {
 		return nil, err
@@ -78,7 +79,7 @@ func (a *authInfo) UpdateEmail(id int64, email string) (*model.AuthInfo, error) 
 	authInformation := model.AuthInfo{}
 	err := a.conn.QueryRow(`update $1 set email = $2 where id = $3 returning id, created_at, email, 
 		password, role, status`,
-		tableName, email, id).Scan(&authInformation.Id, &authInformation.CreatedAt, &authInformation.Email,
+		a.tableName, email, id).Scan(&authInformation.Id, &authInformation.CreatedAt, &authInformation.Email,
 		&authInformation.Password, &authInformation.Role, &authInformation.Status)
 	if err != nil {
 		return nil, err
@@ -87,7 +88,7 @@ func (a *authInfo) UpdateEmail(id int64, email string) (*model.AuthInfo, error) 
 }
 
 func (a *authInfo) Delete(id int64) error {
-	_, err := a.conn.Exec(`delete from $1 where id = $2`, tableName, id)
+	_, err := a.conn.Exec(`delete from $1 where id = $2`, a.tableName, id)
 	if err != nil {
 		return err
 	}

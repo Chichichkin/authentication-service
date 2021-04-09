@@ -17,4 +17,9 @@ service AuthService {
             post: "/auth/register"
         };
     }
+    rpc CreateTableIfNotExists (RegisterRequest) returns (RegisterResponse) {
+        option (google.api.http) = {
+            post: "/auth/CreateTableIfNotExists"
+        };
+    }
 }
