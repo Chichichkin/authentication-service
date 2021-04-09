@@ -11,6 +11,28 @@
     "application/json"
   ],
   "paths": {
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthService_Login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authLoginResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "tags": [
+          "AuthService"
+        ]
+      }
+    },
     "/auth/register": {
       "post": {
         "operationId": "AuthService_Register",
@@ -35,6 +57,14 @@
     }
   },
   "definitions": {
+    "authLoginResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    },
     "authRegisterResponse": {
       "type": "object",
       "properties": {

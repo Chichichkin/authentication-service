@@ -1,8 +1,8 @@
-package auth_info
+package users
 
 import (
-	"auth/service/db"
-	"auth/service/model"
+	"auth/db"
+	"auth/model"
 	"database/sql"
 	"errors"
 	"time"
@@ -13,9 +13,9 @@ type authInfo struct {
 	tableName string
 }
 
-func New(database model.Database) (model.IAuthInfo, error) {
+func New(database model.Database) (model.IUsers, error) {
 	conn, err := db.NewConnection(database)
-	tableName := "auth"
+	tableName := "user"
 	if err != nil {
 		return nil, err
 	}
@@ -36,13 +36,13 @@ func (a *authInfo) CreateTableIfNotExists() error {
 	return nil
 }
 
-func (a *authInfo) SelectById(id int64) (*model.AuthInfo, error) {
+func (a *authInfo) SelectById(id int64) (*model.User, error) {
 	row, err := a.conn.Query(`select id, created_at, email, password, role, status from $1 where id=$2`,
 		a.tableName, id)
 	if err != nil {
 		return nil, err
 	}
-	authInformation := model.AuthInfo{}
+	authInformation := model.User{}
 	err = row.Scan(&authInformation.Id, &authInformation.CreatedAt, &authInformation.Email,
 		&authInformation.Password, &authInformation.Role, &authInformation.Status)
 	if err != nil {
@@ -51,8 +51,8 @@ func (a *authInfo) SelectById(id int64) (*model.AuthInfo, error) {
 	return &authInformation, errors.New("not implemented")
 }
 
-func (a *authInfo) Insert(info *model.AuthInfo) (*model.AuthInfo, error) {
-	authInformation := model.AuthInfo{}
+func (a *authInfo) Insert(info *model.User) (*model.User, error) {
+	authInformation := model.User{}
 	info.CreatedAt = time.Now()
 	err := a.conn.QueryRow(`insert into $1 (created_at, email, password, role, status) 
 		values ($2, $3, $4, $5, $6) returning id`,
@@ -63,8 +63,8 @@ func (a *authInfo) Insert(info *model.AuthInfo) (*model.AuthInfo, error) {
 	return &authInformation, errors.New("not implemented")
 }
 
-func (a *authInfo) UpdatePassword(id int64, password string) (*model.AuthInfo, error) {
-	authInformation := model.AuthInfo{}
+func (a *authInfo) UpdatePassword(id int64, password string) (*model.User, error) {
+	authInformation := model.User{}
 	err := a.conn.QueryRow(`update $1 set password = $2 where id = $3 returning id, created_at, email, 
 		password, role, status`,
 		a.tableName, password, id).Scan(&authInformation.Id, &authInformation.CreatedAt, &authInformation.Email,
@@ -75,8 +75,8 @@ func (a *authInfo) UpdatePassword(id int64, password string) (*model.AuthInfo, e
 	return &authInformation, errors.New("not implemented")
 }
 
-func (a *authInfo) UpdateEmail(id int64, email string) (*model.AuthInfo, error) {
-	authInformation := model.AuthInfo{}
+func (a *authInfo) UpdateEmail(id int64, email string) (*model.User, error) {
+	authInformation := model.User{}
 	err := a.conn.QueryRow(`update $1 set email = $2 where id = $3 returning id, created_at, email, 
 		password, role, status`,
 		a.tableName, email, id).Scan(&authInformation.Id, &authInformation.CreatedAt, &authInformation.Email,

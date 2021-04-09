@@ -1,9 +1,9 @@
 package main
 
 import (
+	"auth/model"
+	"auth/proto"
 	"auth/service"
-	"auth/service/model"
-	proto "auth/service/proto"
 	"context"
 	"fmt"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"

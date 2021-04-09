@@ -1,25 +1,26 @@
 package service
 
 import (
-	"auth/service/db/auth_info"
-	"auth/service/model"
-	proto "auth/service/proto"
+	"auth/db/users"
+	"auth/model"
+	"auth/proto"
 	"context"
 	"errors"
 )
 
 type handler struct {
-	db model.IAuthInfo
+	userDb    model.IUsers
+	sessionDb model.ISessions
 }
 
 func New(database model.Database) (proto.AuthServiceServer, error) {
-	conn, err := auth_info.New(database)
+	conn, err := users.New(database)
 	if err != nil {
 		return nil, err
 	}
 
-	ret := &handler{db: conn}
-	if err = ret.db.CreateTableIfNotExists(); err != nil {
+	ret := &handler{userDb: conn}
+	if err = ret.userDb.CreateTableIfNotExists(); err != nil {
 		return nil, err
 	}
 
@@ -27,5 +28,9 @@ func New(database model.Database) (proto.AuthServiceServer, error) {
 }
 
 func (h *handler) Register(context.Context, *proto.RegisterRequest) (*proto.RegisterResponse, error) {
+	return nil, errors.New("not implemented")
+}
+
+func (h *handler) Login(context.Context, *proto.LoginRequest) (*proto.LoginResponse, error) {
 	return nil, errors.New("not implemented")
 }

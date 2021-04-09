@@ -2,16 +2,16 @@ package model
 
 import "time"
 
-type IAuthInfo interface {
+type IUsers interface {
 	CreateTableIfNotExists() error
-	SelectById(id int64) (*AuthInfo, error)
-	Insert(info *AuthInfo) (*AuthInfo, error)
-	UpdatePassword(id int64, password string) (*AuthInfo, error)
-	UpdateEmail(id int64, email string) (*AuthInfo, error)
+	SelectById(id int64) (*User, error)
+	Insert(info *User) (*User, error)
+	UpdatePassword(id int64, password string) (*User, error)
+	UpdateEmail(id int64, email string) (*User, error)
 	Delete(id int64) error
 }
 
-type AuthInfo struct {
+type User struct {
 	Id        int64     `json:"id"`
 	CreatedAt time.Time `json:"created_at"`
 	Role      Role      `json:"role"`
@@ -23,7 +23,7 @@ type AuthInfo struct {
 type Role int
 
 const (
-	User Role = iota
+	Default Role = iota
 	Moderator
 )
 
