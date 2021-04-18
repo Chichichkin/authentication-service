@@ -27,10 +27,33 @@ func New(database model.Database) (proto.AuthServiceServer, error) {
 	return ret, nil
 }
 
-func (h *handler) Register(context.Context, *proto.RegisterRequest) (*proto.RegisterResponse, error) {
-	return nil, errors.New("not implemented")
+func (h *handler) Register(context context.Context, registerRequest *proto.RegisterRequest) (*proto.RegisterResponse, error) {
+	email := proto.RegisterRequest.GetEmail(registerRequest)
+	password := proto.RegisterRequest.GetPassword(registerRequest)
+	retypePassword := proto.RegisterRequest.GetRetypedPassword(registerRequest)
+
+	if password != retypePassword {
+		return nil, errors.New("password mismatch") // TODO это ошибка?
+	}
+
+	newUser := model.User{Role: 0, Email: email, Password: password, Status: 0} // TODO статус не всегда должен быть 0
+	h.userDb.Insert(&newUser)
+
+	return nil, errors.New("not implemented") // TODO тут должен возвращаться токен
 }
 
-func (h *handler) Login(context.Context, *proto.LoginRequest) (*proto.LoginResponse, error) {
-	return nil, errors.New("not implemented")
+func (h *handler) Login(context context.Context, loginRequest *proto.LoginRequest) (*proto.LoginResponse, error) {
+	email := proto.LoginRequest.GetEmail(loginRequest)
+	password := proto.LoginRequest.GetPassword(loginRequest)
+
+	user, err := h.userDb.SelectByEmail(email)
+	if err != nil {
+		return nil, errors.New("error in h.userDb.SelectByEmail(email)") // TODO выяснить какие ошибки должны быть
+	}
+
+	if user.Password != password { // тут должны сравниваться хэши
+		return nil, errors.New("incorrect password") // TODO это ошибка?
+	}
+
+	return nil, errors.New("not implemented") // TODO тут должен возвращаться токен
 }
