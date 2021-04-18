@@ -1,7 +1,7 @@
 package db
 
 import (
-	"auth/service/model"
+	"auth/model"
 	"database/sql"
 	"fmt"
 	_ "github.com/lib/pq"
