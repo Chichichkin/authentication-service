@@ -24,7 +24,7 @@ func New(database model.Database) (model.IUsers, error) {
 
 func (a *authInfo) CreateTableIfNotExists() error {
 	_, err := a.conn.Exec(`create table if not exists $1 (
-    id         int primary key,
+    id         bigserial   primary key,
     created_at timestamp   not null,
     email      text unique not null,
     password   text        not null,
