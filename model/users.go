@@ -13,7 +13,7 @@ type IUsers interface {
 }
 
 type User struct {
-	Id        int64     `json:"id"`
+	Id        uint64    `json:"id"`
 	CreatedAt time.Time `json:"created_at"`
 	Role      Role      `json:"role"`
 	Status    Status    `json:"status"`
