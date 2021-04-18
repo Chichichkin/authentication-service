@@ -5,6 +5,7 @@ import "time"
 type IUsers interface {
 	CreateTableIfNotExists() error
 	SelectById(id int64) (*User, error)
+	SelectByEmail(email string) (*User, error)
 	Insert(info *User) (*User, error)
 	UpdatePassword(id int64, password string) (*User, error)
 	UpdateEmail(id int64, email string) (*User, error)

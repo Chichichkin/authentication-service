@@ -51,6 +51,21 @@ func (a *authInfo) SelectById(id int64) (*model.User, error) {
 	return &authInformation, errors.New("not implemented")
 }
 
+func (a *authInfo) SelectByEmail(email string) (*model.User, error) {
+	row, err := a.conn.Query(`select id, created_at, email, password, role, status from $1 where email=$2`,
+		a.tableName, email)
+	if err != nil {
+		return nil, err
+	}
+	authInformation := model.User{}
+	err = row.Scan(&authInformation.Id, &authInformation.CreatedAt, &authInformation.Email,
+		&authInformation.Password, &authInformation.Role, &authInformation.Status)
+	if err != nil {
+		return nil, err
+	}
+	return &authInformation, errors.New("not implemented")
+}
+
 func (a *authInfo) Insert(info *model.User) (*model.User, error) {
 	authInformation := model.User{}
 	info.CreatedAt = time.Now()
