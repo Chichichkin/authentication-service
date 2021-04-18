@@ -28,9 +28,9 @@ func New(database model.Database) (proto.AuthServiceServer, error) {
 }
 
 func (h *handler) Register(context context.Context, registerRequest *proto.RegisterRequest) (*proto.RegisterResponse, error) {
-	email := proto.RegisterRequest.GetEmail(registerRequest)
-	password := proto.RegisterRequest.GetPassword(registerRequest)
-	retypePassword := proto.RegisterRequest.GetRetypedPassword(registerRequest)
+	email := registerRequest.GetEmail()
+	password := registerRequest.GetPassword()
+	retypePassword := registerRequest.GetRetypedPassword()
 
 	if password != retypePassword {
 		return nil, errors.New("password mismatch") // TODO это ошибка?
@@ -43,8 +43,8 @@ func (h *handler) Register(context context.Context, registerRequest *proto.Regis
 }
 
 func (h *handler) Login(context context.Context, loginRequest *proto.LoginRequest) (*proto.LoginResponse, error) {
-	email := proto.LoginRequest.GetEmail(loginRequest)
-	password := proto.LoginRequest.GetPassword(loginRequest)
+	email := loginRequest.GetEmail()
+	password := loginRequest.GetPassword()
 
 	user, err := h.userDb.SelectByEmail(email)
 	if err != nil {
