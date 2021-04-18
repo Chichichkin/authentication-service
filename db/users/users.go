@@ -71,7 +71,9 @@ func (a *authInfo) Insert(info *model.User) (*model.User, error) {
 	info.CreatedAt = time.Now()
 	err := a.conn.QueryRow(`insert into $1 (created_at, email, password, role, status) 
 		values ($2, $3, $4, $5, $6) returning id`,
-		a.tableName, info.CreatedAt, info.Email, info.Password, info.Role, info.Status).Scan(&authInformation.Id)
+		a.tableName, info.CreatedAt, info.Email, info.Password, info.Role, info.Status).Scan(&authInformation.Id,
+		&authInformation.CreatedAt, &authInformation.Role, &authInformation.Status, &authInformation.Email,
+		&authInformation.Password)
 	if err != nil {
 		return nil, err
 	}
