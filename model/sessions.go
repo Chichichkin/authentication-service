@@ -14,8 +14,8 @@ type ISessions interface {
 }
 
 type Session struct {
-	Id        int64        `json:"id"` // id сессии
-	UserId    int64        `json:"user_id"`
+	Id        uint64       `json:"id"` // id сессии
+	UserId    uint64       `json:"user_id"`
 	Device    string       `json:"device"`
 	Token     string       `json:"token"`
 	DeletedAt sql.NullTime `json:"deleted_at"`
