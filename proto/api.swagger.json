@@ -33,7 +33,6 @@
         ]
       }
     },
-
     "/auth/register": {
       "post": {
         "operationId": "AuthService_Register",
@@ -61,16 +60,24 @@
     "authLoginResponse": {
       "type": "object",
       "properties": {
-        "token": {
+        "access_token": {
+          "type": "string"
+        },
+        "refresh_token": {
           "type": "string"
         }
       }
     },
-
     "authRegisterResponse": {
       "type": "object",
       "properties": {
-        "token": {
+        "user_id": {
+          "type": "string"
+        },
+        "access_token": {
+          "type": "string"
+        },
+        "refresh_token": {
           "type": "string"
         }
       }

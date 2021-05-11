@@ -57,6 +57,3 @@ func (h *handler) Login(context context.Context, loginRequest *proto.LoginReques
 
 	return nil, errors.New("not implemented") // TODO тут должен возвращаться токен
 }
-func (h *handler) Login(context.Context, *proto.LoginRequest) (*proto.LoginResponse, error) {
-	return nil, errors.New("not implemented")
-}
