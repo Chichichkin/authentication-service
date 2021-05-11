@@ -31,7 +31,7 @@ func main() {
 		panic(err)
 	}
 
-	opts := []grpc.ServerOption{}
+	var opts []grpc.ServerOption
 
 	grpcServer := grpc.NewServer(opts...)
 
