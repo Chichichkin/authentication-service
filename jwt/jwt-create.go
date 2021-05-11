@@ -3,12 +3,13 @@ package jwt
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/twinj/uuid"
+	"auth/db/sessions"
 	"os"
 	"strconv"
 	"time"
 )
 
-func CreateToken(userid int64) (*TokenDetails, error) {
+func CreateToken(userid uint64) (*TokenDetails, error) {
 	td := &TokenDetails{}
 	td.AtExpires = time.Now().Add(time.Minute * 15).Unix()
 	td.AccessUuid = uuid.NewV4().String()
@@ -18,7 +19,6 @@ func CreateToken(userid int64) (*TokenDetails, error) {
 
 	var err error
 	//Creating Access Token
-	os.Getenv("ACCESS_SECRET") //this should be in an env file
 	atClaims := jwt.MapClaims{}
 	atClaims["authorized"] = true
 	atClaims["access_uuid"] = td.AccessUuid

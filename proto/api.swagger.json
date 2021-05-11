@@ -72,7 +72,8 @@
       "type": "object",
       "properties": {
         "user_id": {
-          "type": "string"
+          "type": "string",
+          "format": "uint64"
         },
         "access_token": {
           "type": "string"

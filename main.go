@@ -11,17 +11,18 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os"
 )
 
 func main() {
 	mux := runtime.NewServeMux()
 
 	micro, err := service.New(model.Database{
-		Ip:       "",
-		Port:     "",
-		Name:     "",
-		User:     "",
-		Password: "",
+		Ip:       os.Getenv("PSQL_IP"),
+		Port:     os.Getenv("PSQL_PORT"),
+		Name:     os.Getenv("PSQL_NAME"),
+		User:     os.Getenv("PSQL_USER"),
+		Password: os.Getenv("PSQL_PASSWORD"),
 	})
 	if err != nil {
 		panic(err)

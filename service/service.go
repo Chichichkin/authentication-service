@@ -2,6 +2,7 @@ package service
 
 import (
 	"auth/db/users"
+	"auth/jwt"
 	"auth/model"
 	"auth/proto"
 	"context"
@@ -52,7 +53,7 @@ func (h *handler) Login(context context.Context, loginRequest *proto.LoginReques
 	}
 
 	if user.Password != password { // тут должны сравниваться хэши
-		return nil, errors.New("incorrect password") // TODO это ошибка?
+		return nil, errors.New("incorrect password")
 	}
 
 	return nil, errors.New("not implemented") // TODO тут должен возвращаться токен
