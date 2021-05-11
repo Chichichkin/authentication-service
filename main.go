@@ -2,7 +2,7 @@ package main
 
 import (
 	"auth/model"
-	"auth/proto"
+	proto "auth/proto"
 	"auth/service"
 	"context"
 	"fmt"
