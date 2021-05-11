@@ -1,9 +1,9 @@
 package service
 
 import (
-	"auth/service/db/auth_info"
-	"auth/service/model"
-	proto "auth/service/proto"
+	"auth/db/auth_info"
+	"auth/model"
+	proto "auth/proto"
 	"context"
 	"errors"
 )
@@ -27,5 +27,8 @@ func New(database model.Database) (proto.AuthServiceServer, error) {
 }
 
 func (h *handler) Register(context.Context, *proto.RegisterRequest) (*proto.RegisterResponse, error) {
+	return nil, errors.New("not implemented")
+}
+func (h *handler) Login(context.Context, *proto.LoginRequest) (*proto.LoginResponse, error) {
 	return nil, errors.New("not implemented")
 }

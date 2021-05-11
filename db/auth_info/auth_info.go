@@ -1,8 +1,8 @@
 package auth_info
 
 import (
-	"auth/service/db"
-	"auth/service/model"
+	"auth/db"
+	"auth/model"
 	"database/sql"
 	"errors"
 )
