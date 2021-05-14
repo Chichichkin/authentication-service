@@ -4,7 +4,6 @@ import (
 	"auth/db"
 	"auth/model"
 	"database/sql"
-	"errors"
 	"time"
 )
 

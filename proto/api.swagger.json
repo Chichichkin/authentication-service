@@ -11,6 +11,28 @@
     "application/json"
   ],
   "paths": {
+    "/auth/check": {
+      "post": {
+        "operationId": "AuthService_Check",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authCheckResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "tags": [
+          "AuthService"
+        ]
+      }
+    },
     "/auth/login": {
       "post": {
         "operationId": "AuthService_Login",
@@ -54,9 +76,61 @@
           "AuthService"
         ]
       }
+    },
+    "/auth/upd/access": {
+      "post": {
+        "operationId": "AuthService_UpdAccess",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authUpdTokenResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "tags": [
+          "AuthService"
+        ]
+      }
+    },
+    "/auth/upd/refresh": {
+      "post": {
+        "operationId": "AuthService_UpdRefresh",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authUpdTokenResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "tags": [
+          "AuthService"
+        ]
+      }
     }
   },
   "definitions": {
+    "authCheckResponse": {
+      "type": "object",
+      "properties": {
+        "token_fine": {
+          "type": "boolean"
+        }
+      }
+    },
     "authLoginResponse": {
       "type": "object",
       "properties": {
@@ -79,6 +153,14 @@
           "type": "string"
         },
         "refresh_token": {
+          "type": "string"
+        }
+      }
+    },
+    "authUpdTokenResponse": {
+      "type": "object",
+      "properties": {
+        "New_token": {
           "type": "string"
         }
       }

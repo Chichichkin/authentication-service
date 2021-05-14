@@ -58,3 +58,16 @@ func (h *handler) Login(context context.Context, loginRequest *proto.LoginReques
 
 	return nil, errors.New("not implemented") // TODO тут должен возвращаться токен
 }
+
+// TODO реализовать
+func (h *handler) Check(context context.Context, CheckRequest *proto.CheckRequest) (*proto.CheckResponse, error) {
+	return nil, nil
+}
+
+func (h *handler) UpdAccess(context context.Context, UpdTokenRequest *proto.UpdTokenRequest) (*proto.UpdTokenResponse, error) {
+	return nil, nil
+}
+
+func (h *handler) UpdRefresh(context context.Context, UpdTokenRequest *proto.UpdTokenRequest) (*proto.UpdTokenResponse, error) {
+	return nil, nil
+}
