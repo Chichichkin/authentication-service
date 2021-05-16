@@ -128,6 +128,9 @@
       "properties": {
         "token_fine": {
           "type": "boolean"
+        },
+        "err": {
+          "type": "string"
         }
       }
     },
@@ -139,6 +142,10 @@
         },
         "refresh_token": {
           "type": "string"
+        },
+        "session_id": {
+          "type": "string",
+          "format": "uint64"
         }
       }
     },
@@ -154,6 +161,10 @@
         },
         "refresh_token": {
           "type": "string"
+        },
+        "session_id": {
+          "type": "string",
+          "format": "uint64"
         }
       }
     },
@@ -161,6 +172,9 @@
       "type": "object",
       "properties": {
         "New_token": {
+          "type": "string"
+        },
+        "err": {
           "type": "string"
         }
       }

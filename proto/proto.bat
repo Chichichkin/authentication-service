@@ -1,4 +1,4 @@
-set GOPATH=C:\Users\dds0l\go
+set GOPATH=%USERPROFILE%\go
 set files=auth.proto
 
 protoc -I. -I%GOPATH%\src -I%GOPATH%\src\github.com\grpc-ecosystem\grpc-gateway\third_party\googleapis^

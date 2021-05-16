@@ -22,21 +22,24 @@ message RegisterRequest {
   string email = 1;
   string password = 2;
   string retypedPassword = 3;
+  string userAgent= 4;
 }
 
 message RegisterResponse {
   uint64 user_id = 1;
   string access_token = 2;
   string refresh_token = 3;
-
+  uint64 session_id = 4;
 }
 
 message LoginRequest {
   string email = 1;
   string password = 2;
+  string userAgent= 3;
 }
 
 message LoginResponse {
   string access_token = 1;
   string refresh_token = 2;
+  uint64 session_id = 3;
 }

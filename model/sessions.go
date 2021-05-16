@@ -13,5 +13,7 @@ type Session struct {
 	UserId       uint64 `json:"user_id"`
 	Device       string `json:"device"`
 	AccessToken  string `json:"access_token"`
+	AccessUuid   string `json:"access_uuid"`
 	RefreshToken string `json:"refresh_token"`
+	RefreshUuid  string `json:"refresh_uuid"`
 }

@@ -4,7 +4,6 @@ import (
 	"auth/model"
 	"database/sql"
 	"fmt"
-	_ "github.com/lib/pq"
 )
 
 func NewConnection(database model.Database) (*sql.DB, error) {
